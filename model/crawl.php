@@ -33,7 +33,11 @@ function crawl_data(){
 };
 ////////////////////////////////////////////////////////////////
 function create_table_crawl(){
-    GLOBAL $db;	
+	GLOBAL $db;	
+
+	$drop_tb = "DROP TABLE Crawl";
+	$db->Query($drop_tb);
+
     // sql to create table	
     $Create_Crawl = "CREATE TABLE Crawl (
 	ID_Crawl INT(4)  UNSIGNED AUTO_INCREMENT PRIMARY KEY,  
@@ -53,5 +57,6 @@ function get_crawl() {
     $statement->execute();
     return $statement;    
 }
+////////////////////////////////////////////////////////////////
 
 ?>

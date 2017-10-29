@@ -3,6 +3,9 @@
     function create_keywords(){
         GLOBAL $db;	
         //
+        $drop_tb = "DROP TABLE keywords";
+        $db->Query($drop_tb);
+        //
         $Create_Document = "CREATE TABLE keywords (
         ID_key INT(4)  UNSIGNED AUTO_INCREMENT PRIMARY KEY,   
         Keyword VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
@@ -22,9 +25,9 @@
             
             $comment=$row["Comment_Document"];
             $result2 = array_unique(explode(" ",$comment));
-            print_r($result2);
+            //print_r($result2);
             foreach($result2 as $c){
-                echo $c."<br>";
+                // echo $c."<br>";
                 $sql="INSERT  INTO keywords(Keyword) VALUES ('$c')";
                 $db->Query($sql ); 
             }

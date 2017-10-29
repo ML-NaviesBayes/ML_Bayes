@@ -1,7 +1,10 @@
 <?php
 
     function create_keywords2(){
-        GLOBAL $db;	
+        GLOBAL $db;
+        //
+        $drop_tb = "DROP TABLE keywords2";
+        $db->Query($drop_tb);	
         //
         $Create_Document = "CREATE TABLE keywords2 (
         ID_key INT(4)  UNSIGNED AUTO_INCREMENT PRIMARY KEY,   

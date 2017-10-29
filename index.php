@@ -6,7 +6,10 @@ include('model/handle.php');
 include('model/keyword.php');
 include('model/keyword2.php');
 
+
+
 //goi ham 
+
 
 create_table_crawl();
 create_document();

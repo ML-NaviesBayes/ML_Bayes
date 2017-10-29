@@ -3,6 +3,9 @@
     function create_document(){
         GLOBAL $db;	
         //
+        $drop_tb = "DROP TABLE Document";
+        $db->Query($drop_tb);
+        //
         $Create_Document = "CREATE TABLE Document (
         ID_Document INT(4)  UNSIGNED AUTO_INCREMENT PRIMARY KEY,   
         ID_Crawl INT(4) UNSIGNED NOT NULL,
