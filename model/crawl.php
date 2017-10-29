@@ -3,7 +3,8 @@
 function crawl_data(){
 	GLOBAL $db;
 	//require gọi thư viện vào
-	require "simple_html_dom.php";
+	require('simple_html_dom.php');
+	//require "simple_html_dom.php";
 	//lấy html cua trang web ve
 	$tenweb="https://www.thegioididong.com/dtdd";
 	$html= file_get_html($tenweb);

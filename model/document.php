@@ -22,14 +22,18 @@
                 $id_crawl=$row['ID_Crawl'];
                 $Star= $row["Rate_Crawl"];
                 $comment=$row["Comment_Crawl"];
-                $recomment=reg($comment);  
-                $cut_space=trim($recomment);
+                $trim_comment= trim($comment);
+                $recomment=reg($trim_comment);  
+                $recomment2=preg_replace('/\s+/', ' ', $recomment);
+                $strtolowers=mb_strtolower($recomment2);
                 
-                $recomment_stopword=cut_stopword($cut_space);
-                $cut_space2= trim($recomment_stopword);
-    
+                $recomment_stopword=cut_stopword($strtolowers);
+
+               // $recomment_stopword=cut_stopword($strtolowers);
+             
+
                 $cut_stopword_sql = "INSERT INTO document (ID_Crawl,Comment_Document,Rate_Document)
-                    VALUES ('$id_crawl','$cut_space2','$Star')";
+                    VALUES ('$id_crawl','$recomment_stopword','$Star')";
                         
                     
                     
@@ -44,6 +48,35 @@
         $statement = $db->prepare($query);
         $statement->execute();
         return $statement;    
+    }
+
+    function a() {
+        global $db;
+        $query = 'SELECT * FROM document
+        WHERE ID_Document= 1 ';
+        $result = $db->Query($query);
+        while($row = $result->fetch()) { 
+            //$id_crawl=$row['ID_Crawl'];
+            //$Star= $row["Rate_Crawl"];
+            $comment=$row["Comment_Document"];
+            $b= trim($comment);
+            //$recomment=reg($comment);  
+            $c=preg_replace('/\s+/', ' ', $b);
+            $recomment_stopword=cut_stopword($c);
+            print_r (explode(' ',$recomment_stopword));
+            //echo $recomment_stopword;
+            
+
+           
+         
+
+                    
+                
+                
+           // $db->Query($cut_stopword_sql );    
+        }     
+  
+        
     }
         
 ?>
