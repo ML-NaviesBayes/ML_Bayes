@@ -12,10 +12,10 @@ include('model/keyword.php');
 //create_table_crawl();
 // create_document();
 // insert_document();
-create_keywords();
-create_doc_key();
-insert_doc_key();
+// create_keywords();
+// create_doc_key();
+// insert_doc_key();
 
-
+insert_doc_key_frequency();
 
 ?>

@@ -53,7 +53,7 @@
                 $last_id_key = $stmt->fetchColumn();
                 //
                 $sql_doc_key="INSERT  INTO doc_key(ID_Document,ID_key) VALUES ('$last_id_doc','$last_id_key')";
-                $db->Query($sql_doc_key ); 
+                $db->Query($sql_doc_key); 
 
                 // echo $last_id_key."---".$c;
 
@@ -63,7 +63,56 @@
         
     };
   
+    function insert_doc_key_frequency(){
+        GLOBAL $db;
+        
+        $query = 'SELECT  t.Comment_Document,keywords.Keyword,keywords.ID_key
+                    FROM keywords
+                    INNER JOIN (SELECT  document.Comment_Document,doc_key.ID_key
+                                FROM document
+                                INNER JOIN doc_key
+                                ON document.ID_Document = doc_key.ID_Document) as t
+                    ON t.ID_key = keywords.ID_key';      
+    
+        $result = $db->Query($query);
+        while($row = $result->fetch()) { 
+         
+            $Comment_Document=$row["Comment_Document"];
+            $Keyword=$row["Keyword"];
+            $ID_key=$row["ID_key"];
+            $result2 = explode(" ",$Comment_Document);      
+            $result3="".$Keyword;           
+          
+            $i=0;
+             foreach($result2 as $c){
+                if($c==$result3){                   
+                    $i++;
+                } 
+            }
 
+            $sql="UPDATE doc_key
+            SET frequency = '$i'
+            WHERE ID_key = '$ID_key'";
+            $db->Query($sql);
+           
+            // foreach($result as $c){
+                
+            //  echo $c."<br>";
+            // }
+
+
+            
+            // foreach($result as $c){
+        
+                
+
+            // }
+
+        }  
+        
+
+
+    }
 
    
         
