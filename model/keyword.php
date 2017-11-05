@@ -15,44 +15,55 @@
         $db->Query($Create_Document ); 
     };
 
-    function insert_keyword(){
-        GLOBAL $db;
+    
+    function create_doc_key(){
+        GLOBAL $db;	
+        //
+        $Create_Document = "CREATE TABLE doc_key (
+         ID_Document int(4) UNSIGNED,
+         ID_key int(4) UNSIGNED,
+         frequency int(3),
+         PRIMARY KEY (ID_Document,ID_key),
+         FOREIGN KEY (ID_Document) REFERENCES Document (ID_Document),
+         FOREIGN KEY (ID_key) REFERENCES keywords (ID_key)
+        )";
+        
+        $db->Query($Create_Document ); 
+    };
 
+    function insert_doc_key(){
+        GLOBAL $db;
+        
         $query = 'SELECT * FROM document ';      
 
         $result = $db->Query($query);
         while($row = $result->fetch()) { 
-            
+            $ID_Document=$row["ID_Document"];
             $comment=$row["Comment_Document"];
+            $last_id_doc = $ID_Document;
+
             $result2 = array_unique(explode(" ",$comment));
-            //print_r($result2);
+           
             foreach($result2 as $c){
-                // echo $c."<br>";
-                $sql="INSERT  INTO keywords(Keyword) VALUES ('$c')";
-                $db->Query($sql ); 
+        
+                $sql="INSERT  INTO keywords(Keyword) VALUES ('$c') ";    
+                
+                $db->Query($sql );
+                $stmt = $db->query("SELECT LAST_INSERT_ID()");
+                $last_id_key = $stmt->fetchColumn();
+                //
+                $sql_doc_key="INSERT  INTO doc_key(ID_Document,ID_key) VALUES ('$last_id_doc','$last_id_key')";
+                $db->Query($sql_doc_key ); 
+
+                // echo $last_id_key."---".$c;
+
             }
 
         }  
-    }
-    // function insert_keyword2(){
-    //     GLOBAL $db;
-       
-    //     $a='hoàng ăn cơm chưa ăn uuuu';
-    //     $c='hoàng ăn cơm chưa ăn uuuu eee';
-    //     $b=array_unique(explode(" ",$c));
-    //     foreach($b as $c){
-            
-    //         $sql="INSERT IGNORE INTO keywords(Keyword) VALUES ('$c')";
-    //         $db->Query($sql ); 
-    //     }
-      
-    //     //$result = $db->Query($a);
-       
-
-    // }  
         
-       
-    
+    };
+  
+
 
    
         
